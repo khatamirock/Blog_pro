@@ -4,19 +4,19 @@
 
 <p> <%= startingContent %> </p>
 
-<ul>
+<ul class="home_ul">
     
     <% for (let i = 0; i < posts.length; i++) { %>
-        <a style=" text-decoration: none;" href="/posts/<%= i%>">
+        <a class="link_posts" style=" text-decoration: none;" href="/posts/<%= posts[i].title%>">
             <li class="post">
-                <h1><%= posts[i].title %></h1>
-                <p><%= posts[i].content %></p>
+                <h1 id="title"><%= posts[i].title %></h1>
+                <p><%= posts[i].content.substring(0, 120) + "..." %></p>
+                
             </li>
         </a>
     <% } %>
     
 </ul>
 
-
-
+  
 <%- include('partials/footer') -%>
