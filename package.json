@@ -11,9 +11,8 @@
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
-    "lodash": "^4.17.20"
+    "nodemon": "^3.1.0"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Karsenh/BlogWebsite.git"

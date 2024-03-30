@@ -5,13 +5,15 @@
 <p> <%= startingContent %> </p>
 
 <ul>
-
-    <% posts.forEach(function(post) { %>
-    <li>
-        <h1><%= post.title %></h1>
-        <p><%= post.content %></p>
-    </li>
-    <% }) %>
+    
+    <% for (let i = 0; i < posts.length; i++) { %>
+        <a style=" text-decoration: none;" href="/posts/<%= i%>">
+            <li class="post">
+                <h1><%= posts[i].title %></h1>
+                <p><%= posts[i].content %></p>
+            </li>
+        </a>
+    <% } %>
     
 </ul>
 
