@@ -12,7 +12,7 @@ const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui 
 const aboutContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
 const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
 
-var parr=[new post('super','man is the best'),new post('super','man is the best')];
+var parr=[new post('super','man is the best'),new post('title001','Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero cumque aut veniam modi, vitae voluptate eaque odit saepe dolore, voluptatibus fugit beatae magni cum nobis tempora dolores? Sint libero ducimus sequi itaque voluptatibus ipsam, quibusdam consequuntur rerum. Blanditiis quia autem eius explicabo! Laborum ex impedit sint cupiditate, repudiandae sapiente perspiciatis explicabo numquam qui maiores aperiam, fugiat, officia voluptatem provident quibusdam sit in. Quia aliquid quis eaque voluptates consectetur id minus, modi doloremque doloribus iste placeat error vero amet autem ab, ullam ipsa beatae. Quisquam ea harum recusandae fugit tenetur. Culpa natus, nihil, deleniti qui quisquam asperiores et delectus non porro possimus odio? Repudiandae harum quo maxime nihil praesentium. Natus at ad architecto eos. Dolores ipsum, consequuntur repudiandae beatae cum nostrum quis voluptates animi aspernatur incidunt veniam iure natus atque porro doloribus vitae. Adipisci eum omnis perspiciatis animi beatae ad porro numquam labore officia, velit dicta similique deleniti quam quis a aliquid neque nemo ullam nam soluta? Dolorem, aspernatur vitae impedit officia dolorum, ipsam cupiditate non nihil maxime, facilis at ipsa! Illum sed reprehenderit magnam saepe, autem quo, mollitia ab quisquam obcaecati tempore deserunt dicta, repellat expedita. Voluptatibus tenetur, laboriosam necessitatibus quidem magni labore temporibus eius voluptatum laborum? Voluptatum, laboriosam culpa?')];
 
 const app = express();
 
@@ -23,7 +23,7 @@ app.use(express.static("public"));
 
 // Get HOME (root) page
 app.get('/', function(req, res) {
-  console.log('kire vaii');
+  
   res.render('home', {pageTitle: "Home", startingContent: homeStartingContent, posts: parr });
 });
 
