@@ -1,4 +1,24 @@
 // Styles for desktop screens
+// fonts
+
+ 
+@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@400..700&family=Rancho&display=swap')
+
+
+.startHero{
+    font-size: 18px;
+}
+.upmargin{
+
+    margin-top: 40px;
+}
+.arrow{
+    font-weight: bold;
+    font-size: 30px;
+    text-decoration: none;
+    padding-left: 10px;
+}
+
 .link_posts {
     // background-color: red;
     color: rgb(0, 25, 53);
@@ -26,5 +46,27 @@
 @media only screen and (max-width: 767px) {
     .nav {
         display: none; // Hide the navigation bar
+    }
+}
+
+
+
+// post.ejs
+
+.post{
+    .dashed{
+        border-top: 3px dashed #bbb;
+    }
+}
+
+
+// about
+
+.somethn{
+    .hello{
+        font-family: "Rancho", cursive;
+    }
+    .learn{
+        font-family: "Edu NSW ACT Foundation", cursive;
     }
 }
