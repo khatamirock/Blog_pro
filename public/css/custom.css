@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Rancho&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@400..700&family=Rancho&display=swap");
 .startHero {
   font-size: 18px;
 }
@@ -42,6 +42,106 @@
   border-top: 3px dashed #bbb;
 }
 
+.compose_form {
+  padding: 30px;
+}
+
 .somethn .hello {
   font-family: "Rancho", cursive;
+}
+.somethn .learn {
+  font-family: "Edu NSW ACT Foundation", cursive;
+}
+
+/* Bordered form */
+form {
+  border: 3px solid #f1f1f1;
+}
+
+/* Full-width inputs */
+/* Set a style for all buttons */
+/* Add a hover effect for buttons */
+button:hover {
+  opacity: 0.8;
+}
+
+.log_container {
+  margin-top: 52px;
+}
+
+/* Extra style for the cancel button (red) */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the avatar image inside this container */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+/* Avatar image */
+img.avatar {
+  width: 15%;
+  border-radius: 50%;
+}
+
+/* Add padding to containers */
+.acontainer {
+  margin-top: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+.acontainer .name {
+  width: 80%;
+  padding: 13px;
+}
+.acontainer .name input {
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+}
+.acontainer .pass {
+  padding: 13px;
+  width: 80%;
+}
+.acontainer .pass input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+}
+.acontainer button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 40%;
+}
+
+.ftr_container {
+  padding: 17px 32px;
+}
+
+/* The "Forgot password" text */
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+    display: block;
+    float: none;
+  }
+  .cancelbtn {
+    width: 100%;
+  }
 }/*# sourceMappingURL=custom.css.map */
