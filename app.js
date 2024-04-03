@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 const dotnv=require("dotenv");
 const { MongoClient } = require("mongodb");
 
-
 // imports>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -15,6 +14,8 @@ const { MongoClient } = require("mongodb");
 dotnv.config();
 
 const post=require('./models/post');
+const { connectToDatabase } = require("./models/collections");
+
 
 var log_true=false;
 
@@ -39,7 +40,7 @@ app.use(express.static("assets"));
 
 
 // commonConfigVars.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-commonVars={logged:log_true,name:"none"}
+commonVars={logged:log_true,name:"none",uid:-1}
 // commonConfigVars.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -87,12 +88,29 @@ app.get('/compose', function(req, res) {
 });
 
 
-app.post('/compose', function(req, res) {
+app.post('/compose', async function(req, res) {
   // Use req(uest).body using body-parser module
   // console.log(req.body.pageTitle);
   if(commonVars.logged){
+
+    var title=req.body.newTitle;
+    var cont=req.body.newContent
   const pot = new post(
-    req.body.newTitle, req.body.newContent);
+    title,cont );
+
+    console.log(commonVars);
+    var database;
+    var blogs;
+    try{
+       database = await connectToDatabase(); 
+      blogs = database.collection('blogs');
+     }
+     catch(e){
+      console.log("ERRRRROORR",e);
+     }
+     
+    const result = await blogs.insertOne({title:pot.title, content: pot.content,user:commonVars.uid,react:[]});
+
 
   pst_arr.push(pot);
   res.redirect('/');
@@ -113,33 +131,33 @@ app.get('/logn',function(req,res){
   }
   res.redirect('/about');
 })
+
+
 app.post('/log_handl',async function(req,res){
 
   var name=req.body.uname;
   var pass=req.body.psw;
   console.log(name,pass);
+  var got_user;
+  var database;
+  var blogs;
+   try{
+    database = await connectToDatabase();
+    const allusers = database.collection('usercred');
+    blogs = database.collection('blogs');
 
   
-    const uri =  process.env.MONG_URL;
-
-    const client = new MongoClient(uri);
-
-    var database;
-    if(client){
-      console.log("SUCCESS");
-      database = client.db('blogUsers');
-      
-    }else{
-      console.log("ERROR");
-    }
-    const allusers = database.collection('usercred');
-
-    // Query for a movie that has the title 'Back to the Future'
     const query = { name:name,pass:pass};
-    const got_user = await allusers.findOne(query);
+    got_user = await allusers.findOne(query);
  
+   }
+   catch(e){
+    console.log("ERRRRROORR",e);
+   }
+
     var lss=[];
     pst_arr=[];
+
 
 
 
@@ -147,13 +165,13 @@ app.post('/log_handl',async function(req,res){
     commonVars.logged=true;
     commonVars.name=got_user.name;
     theId=got_user._id;
-
+    commonVars.uid=theId;
  
 
 
     console.log(theId);
      
-    const blogs = database.collection('blogs');
+    
     var lsts=blogs.find({"user":theId})
     lsts=await lsts.toArray();
     console.log(lsts,"\n\n>>>>>>>>>>",lsts.length);
