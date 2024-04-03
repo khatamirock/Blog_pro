@@ -50,7 +50,7 @@ var uid;
 app.get('/', function(req, res) {
   if(commonVars.logged){
   console.log(uid);
-  res.render('home', {pageTitle: "Hello - ", startingContent: homeStartingContent, posts: pst_arr, ...commonVars });
+  res.render('home', {pageTitle: "Hello - ", posts: pst_arr, ...commonVars });
   }
   else{
     res.redirect('/logn');
