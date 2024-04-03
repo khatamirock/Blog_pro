@@ -23,9 +23,9 @@ const homeStartingContent = "Hello Welcome the the simple yet intersting Blog we
  
 const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
 
-var pst_arr=[new post('super','man is the best'),new post('title001','Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero cumque aut veniam modi, vitae voluptate eaque odit saepe dolore, voluptatibus fugit beatae magni cum nobis tempora dolores? Sint libero ducimus sequi itaque voluptatibus ipsam, quibusdam consequuntur rerum. Blanditiis quia autem eius explicabo! Laborum ex impedit sint cupiditate, repudiandae sapiente perspiciatis explicabo numquam qui maiores aperiam, fugiat, officia voluptatem provident quibusdam sit in. Quia aliquid quis eaque voluptates consectetur id minus, modi doloremque doloribus iste placeat error vero amet autem ab, ullam ipsa beatae. Quisquam ea harum recusandae fugit tenetur. Culpa natus, nihil, deleniti qui quisquam asperiores et delectus non porro possimus odio? Repudiandae harum quo maxime nihil praesentium. Natus at ad architecto eos. Dolores ipsum, consequuntur repudiandae beatae cum nostrum quis voluptates animi aspernatur incidunt veniam iure natus atque porro doloribus vitae. Adipisci eum omnis perspiciatis animi beatae ad porro numquam labore officia, velit dicta similique deleniti quam quis a aliquid neque nemo ullam nam soluta? Dolorem, aspernatur vitae impedit officia dolorum, ipsam cupiditate non nihil maxime, facilis at ipsa! Illum sed reprehenderit magnam saepe, autem quo, mollitia ab quisquam obcaecati tempore deserunt dicta, repellat expedita. Voluptatibus tenetur, laboriosam necessitatibus quidem magni labore temporibus eius voluptatum laborum? Voluptatum, laboriosam culpa?')];
+// var pst_arr=[new post('super','man is the best'),new post('title001','Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero cumque aut veniam modi, vitae voluptate eaque odit saepe dolore, voluptatibus fugit beatae magni cum nobis tempora dolores? Sint libero ducimus sequi itaque voluptatibus ipsam, quibusdam consequuntur rerum. Blanditiis quia autem eius explicabo! Laborum ex impedit sint cupiditate, repudiandae sapiente perspiciatis explicabo numquam qui maiores aperiam, fugiat, officia voluptatem provident quibusdam sit in. Quia aliquid quis eaque voluptates consectetur id minus, modi doloremque doloribus iste placeat error vero amet autem ab, ullam ipsa beatae. Quisquam ea harum recusandae fugit tenetur. Culpa natus, nihil, deleniti qui quisquam asperiores et delectus non porro possimus odio? Repudiandae harum quo maxime nihil praesentium. Natus at ad architecto eos. Dolores ipsum, consequuntur repudiandae beatae cum nostrum quis voluptates animi aspernatur incidunt veniam iure natus atque porro doloribus vitae. Adipisci eum omnis perspiciatis animi beatae ad porro numquam labore officia, velit dicta similique deleniti quam quis a aliquid neque nemo ullam nam soluta? Dolorem, aspernatur vitae impedit officia dolorum, ipsam cupiditate non nihil maxime, facilis at ipsa! Illum sed reprehenderit magnam saepe, autem quo, mollitia ab quisquam obcaecati tempore deserunt dicta, repellat expedita. Voluptatibus tenetur, laboriosam necessitatibus quidem magni labore temporibus eius voluptatum laborum? Voluptatum, laboriosam culpa?')];
 // vars
-
+var pst_arr=[];
 
 
 const app = express();
@@ -39,7 +39,7 @@ app.use(express.static("assets"));
 
 
 // commonConfigVars.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-commonVars={logged:log_true}
+commonVars={logged:log_true,name:"none"}
 // commonConfigVars.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -49,7 +49,7 @@ var uid;
 app.get('/', function(req, res) {
   if(commonVars.logged){
   console.log(uid);
-  res.render('home', {pageTitle: "Home", startingContent: homeStartingContent, posts: pst_arr, ...commonVars });
+  res.render('home', {pageTitle: "Hello - ", startingContent: homeStartingContent, posts: pst_arr, ...commonVars });
   }
   else{
     res.redirect('/logn');
@@ -77,25 +77,38 @@ app.get('/posts/:post', function(req, res) {
 });
 
 app.get('/compose', function(req, res) {
+
+  if(commonVars.logged){
   res.render('compose', {...commonVars});
+  }
+  else{
+    res.redirect('/logn');
+  }
 });
 
 
 app.post('/compose', function(req, res) {
   // Use req(uest).body using body-parser module
   // console.log(req.body.pageTitle);
+  if(commonVars.logged){
   const pot = new post(
     req.body.newTitle, req.body.newContent);
 
   pst_arr.push(pot);
-  console.log(pst_arr);
   res.redirect('/');
+
+  }else{
+    res.redirect('/logn');
+  }
+
+  
 });
 
 
 app.get('/logn',function(req,res){
   if(!commonVars.logged){
   console.log(commonVars);
+
   res.render('login',{pageTitle:"LogIn",...commonVars});
   }
   res.redirect('/about');
@@ -125,17 +138,43 @@ app.post('/log_handl',async function(req,res){
     const query = { name:name,pass:pass};
     const got_user = await allusers.findOne(query);
  
+    var lss=[];
+    pst_arr=[];
+
+
+
+    if(got_user){
+    commonVars.logged=true;
+    commonVars.name=got_user.name;
+    theId=got_user._id;
+
  
 
-    commonVars.logged=true;
 
-    console.log(got_user);
-    uid=1;
-    var blogs = database.collection('blogs');
-    var logs = await blogs.findOne({user:2});
-    console.log(logs);
+    console.log(theId);
+     
+    const blogs = database.collection('blogs');
+    var lsts=blogs.find({"user":theId})
+    lsts=await lsts.toArray();
+    console.log(lsts,"\n\n>>>>>>>>>>",lsts.length);
+ 
+    lsts.forEach(elm => {
+      var cont=elm.content;
+      var title=elm.title;
 
+ 
+      pst_arr.push(new post(title,cont));
+      
 
+    });
+    console.log("\n\n\n>>>>>>>>>>>>",lss);
+    
+    }
+
+    
+    
+
+  // res.redirect('/logn');
   res.redirect('/');
 
 })
