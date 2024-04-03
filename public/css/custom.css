@@ -115,6 +115,15 @@ img.avatar {
   padding: 10px;
   border-radius: 6px;
 }
+.acontainer .mail {
+  padding: 13px;
+  width: 80%;
+}
+.acontainer .mail input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+}
 .acontainer button {
   background-color: #04AA6D;
   color: white;

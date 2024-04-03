@@ -22,7 +22,10 @@
           <li id="about"><a href="/about">ABOUT ME</a></li>
           <!-- <li id="contact"><a href="/contact">CONTACT US</a></li> -->
           <li id="compose"><a href="/compose">COMPOSER</a></li>
-          <li id="login"> <a href="/logn"> LOGIN</a> </li>
+          <li style="display:<%= logged ? 'none' : 'block' %>" id="login"> <a href="/logn"> LOGIN</a> </li>
+          <li style="display:<%= logged ? 'none' : 'block' %>" id="signup"> <a href="/signup"> SIGNUP</a> </li>
+          <li style="display:<%= logged ? 'block' : 'none' %>" id="logOut"> <a href="/logout"> LOGOUT</a> </li>
+
         </ul>
     </div>
   </nav>

@@ -1,7 +1,7 @@
 <%- include('partials/header') -%>
 <h1> <%= pageTitle %> </h1>
 
-<form class="log_container" action="/log_handl" method="post">
+<form class="log_container" action="/signup" method="post">
     <div class="imgcontainer">
         <img src="img/avtr.png" alt="Avatar" class="avatar">
     </div>
@@ -12,13 +12,18 @@
             <label for="uname"><b>Username</b></label>
             <input type="text" placeholder="Enter Username" name="uname" required>
         </div>  
- 
+        <div class="mail">
+
+            <label for="email"><b>Email</b></label>
+            <input type="email" placeholder="Enter Email" id="email" name="email" required>
+
+        </div>
         <div class="pass">
             <label for="psw"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="psw" required>
 
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">SignUp</button>
         <label>
             <input type="checkbox" checked="checked" name="remember"> Remember me
         </label>
