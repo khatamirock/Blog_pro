@@ -16,6 +16,14 @@
     #title{
         font-family: "Ubuntu", sans-serif;
     }
+
+    .post{
+        // background-color: red;
+        border-style: solid;
+        border-radius: 10px;
+        margin: 10px;
+
+    }
 .home_content{
     color: #77777f;
 }
@@ -38,7 +46,7 @@
 }
 
 .link_posts {
-    // background-color: red;
+    background-color: red;
     color: rgb(0, 25, 53);
     font-weight: bold;
     
@@ -72,6 +80,8 @@
 // post.ejs
 
 .post{
+    // background-color: red;
+    padding: 10px;
     .dashed{
         border-top: 3px dashed #bbb;
     }

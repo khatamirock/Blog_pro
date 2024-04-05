@@ -8,6 +8,11 @@
 .home_ul #title {
   font-family: "Ubuntu", sans-serif;
 }
+.home_ul .post {
+  border-style: solid;
+  border-radius: 10px;
+  margin: 10px;
+}
 .home_ul .home_content {
   color: #77777f;
 }
@@ -28,6 +33,7 @@
 }
 
 .link_posts {
+  background-color: red;
   color: rgb(0, 25, 53);
   font-weight: bold;
   transition: color 0.2s ease; /* Transition for color on regular state */
@@ -50,6 +56,9 @@
   .nav {
     display: none;
   }
+}
+.post {
+  padding: 10px;
 }
 .post .dashed {
   border-top: 3px dashed #bbb;

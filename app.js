@@ -17,7 +17,7 @@ const post=require('./models/post');
 const { connectToDatabase } = require("./models/collections");
 
 
-var log_true=false;
+
 
 // vars
 const homeStartingContent = "Hello Welcome the the simple yet intersting Blog website .....  feel free to share your post";
@@ -36,20 +36,26 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.use(express.static("assets"));
+app.use(express.static("models"));
 
 
-
+var log_true=false;
 // commonConfigVars.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-commonVars={logged:log_true,name:"none",uid:-1}
+commonVars={logged:log_true,name:"none",uid:-1,react:[]}
 // commonConfigVars.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
+
+// Middleware to parse JSON bodies
+app.use(express.json()); // this line is suffice
+ 
+// end >>>>>>>>>>>>>>>>>>>>>>>>
 
 var uid;
 // Get HOME (root) page
 app.get('/', function(req, res) {
   if(commonVars.logged){
-  console.log(uid);
+  
   res.render('home', {pageTitle: "Hello - ", posts: pst_arr, ...commonVars });
   }
   else{
@@ -96,6 +102,7 @@ app.post('/compose', async function(req, res) {
     var title=req.body.newTitle;
     var cont=req.body.newContent
   const pot = new post(
+    commonVars.name,
     title,cont );
 
     console.log(commonVars);
@@ -179,13 +186,15 @@ app.post('/log_handl',async function(req,res){
     lsts.forEach(elm => {
       var cont=elm.content;
       var title=elm.title;
-
+      console.log(elm.react);
  
-      pst_arr.push(new post(title,cont));
+      pst_arr.push(new post(got_user.name,title,cont,elm.react));
+
       
 
     });
-    console.log("\n\n\n>>>>>>>>>>>>",lss);
+
+    // console.log("\n\n\n>>>>>>>>>>>>",lss);
     
     }
 
@@ -239,6 +248,90 @@ app.get('/logout',function(req,res){
   commonVars.logged=false;
   res.redirect('/');
 })
+
+
+var mineorother='mine';
+
+app.post('/testr',async function(req,res){
+  var blogType=req.body.idx;
+
+  
+ 
+  var database;
+  var blogs;
+  
+  try{
+   database = await connectToDatabase();
+
+   blogs = database.collection('blogs');
+
+  }
+  catch(e){
+   console.log("ERRRRROORR",e);
+  }
+  var qry={}
+  if(blogType==="mine" && mineorother!==blogType){
+    // console.log("amar",commonVars.uid);
+    pst_arr=[]
+    var id=commonVars.uid;
+    var lsts=blogs.find({"user":id})
+    var lsts=await lsts.toArray();
+    // console.log(lsts);
+
+    commonVars.logged=true;
+    // commonVars.name=got_user.name;
+    theId=id;
+    qry['user']=id;
+    commonVars.uid=id;
+
+    mineorother="mine";
+    
+    
+    
+  }
+
+
+  if(blogType==="others" && mineorother!==blogType)
+  {
+    pst_arr=[];
+    console.log("sokoler");
+    mineorother="other";
+  }
+    var lsts=blogs.find(qry);
+    lsts=await lsts.toArray();
+    
+    
+    const allusers = database.collection('usercred');
+
+    // Iterate over the elements in lsts array using for...of loop
+    for (const elm of lsts) {
+      try {
+        const cont = elm.content;
+        const title = elm.title;
+        const curid = elm.user;
+    
+        // Find the user by _id asynchronously
+        const user = await allusers.findOne({ _id: curid });
+    
+        if (user) {
+          const id = user.name;
+          console.log(elm.user, id);
+          pst_arr.push(new post(id, title, cont, elm.react));
+        } else {
+          console.log("User not found for _id:", curid);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+    
+  
+  console.log("DONE LOADING >>>> from server");
+  res.redirect('/')
+
+})
+
+
 
 
 
